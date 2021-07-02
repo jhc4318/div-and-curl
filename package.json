@@ -14,13 +14,14 @@
   "author": "Robert King",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@impvis/components": "^1.2.1",
+    "@impvis/components": "^1.2.2",
     "@impvis/components-katex": "^1.0.0",
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
     "mathjax": "^3.2.0",
     "mathjs": "^9.4.3",
     "numeric": "^1.2.6",
+    "p5": "^1.4.0",
     "plotly.js-dist": "^2.2.0",
     "vue": "^2.6.11",
     "vue-awesome": "^4.1.0"

@@ -25,16 +25,7 @@
                 </iv-pane>
 
                 <iv-fixed-hotspot position="bottom" transparent>
-                    <div class="center">
-                        <iv-button @click="toggleButton">
-                            <div v-if="buttonState == 0">Play</div>
-                            <div v-if="buttonState == 1">Pause</div>
-                            <!-- <div v-if="buttonState == 1">Continue</div>
-                            <div v-if="buttonState == 2">Pause</div>
-                            <div v-if="buttonState == 3">Reset</div> -->
-                        </iv-button>
-                    </div>
-                    <iv-slider id="frameSlider" name="Frame #" min="0" max="176" step="1" init_val="0" />
+                    <iv-slider id="frameSlider" name="Frame #" :min="0" :max="176" :step="1" :tick_step="20" :init_val="0" :playButton="true" @sliderChangedbyPlay="changeSlider" @click="changeSlider" />
                 </iv-fixed-hotspot>
             </template>
 
@@ -59,20 +50,21 @@ export default {
         return {
             pageName:"Divergence",
             vue_config,
-            buttonState: 0,
+            isPaused: false,
+            frameNo: 0,
+            redrawPlot: false,
         };
     },
     methods: {
-        toggleButton() {
-            switch(this.buttonState) {
-                case 0: // Press Play, display Pause
-                    this.buttonState = 1;
-                    break;
-                case 1:
-                    this.buttonState = 0;
-                    break;
-            }
-        },
+        changeSlider(e) {
+            this.frameNo = e;
+        }
+    },
+    watch: {
+        frameNo: function() {
+            this.redrawPlot = true;
+
+        }
     },
     mounted() {
         let v = this;
@@ -81,7 +73,7 @@ export default {
         let animationFrames;
         let animationIndex, animationLimit;
         let duration = 50;
-        let isPaused = false;
+        let isPaused = v.isPaused;
         let stops;
         let playID, sliderID;
 
@@ -129,7 +121,8 @@ export default {
             isPaused = true;
             animationIndex = 0;
             historyPlot(animationIndex);
-            document.getElementById(playID).value = isPaused ? "Play" : "Pause";
+            // document.getElementById(playID).value = isPaused ? "Play" : "Pause";
+            // v.buttonState = 0;
             updateSlider();
             return;
         }
@@ -139,6 +132,7 @@ export default {
          * @param {int} index - index of the frame
          */
         function historyPlot(index) {
+            // console.log("historyPlot");
             animationIndex = index;
             let data = [];
             for (let i = 0, n = animationFrames[index].data.length; i < n; ++i) {
@@ -154,7 +148,8 @@ export default {
                 }
             );
             isPaused = true;
-            document.getElementById(playID).value = isPaused ? "Play" : "Pause";
+            // document.getElementById(playID).value = isPaused ? "Play" : "Pause";
+            // v.buttonState = 0;
             return;
         }
 
@@ -163,7 +158,8 @@ export default {
             animationIndex++;
             if (animationIndex === animationLimit) {
                 isPaused = true;
-                document.getElementById(playID).value = "Reset";
+                // document.getElementById(playID).value = "Reset";
+                // v.buttonState = 3;
                 return;
             }
             if (!isPaused) {
@@ -196,7 +192,8 @@ export default {
                     animationIndex === stops[7]
                 ) {
                     isPaused = !isPaused;
-                    document.getElementById(playID).value = "Continue";
+                    // document.getElementById(playID).value = "Continue";
+                    // v.buttonState = 2;
                     animationIndex--;
                 }
             }
@@ -215,7 +212,9 @@ export default {
 
         /** updates linked frame slider value and position. */
         function updateSlider() {
+            // console.log("updating slider");
             $(sliderID).val(animationIndex);
+            v.frameNo = animationIndex;
             $(sliderID + "Display").text(animationIndex);
         }
 
@@ -223,11 +222,11 @@ export default {
         function startAnimation() {
             if (animationIndex < animationLimit) {
                 isPaused = !isPaused;
-                if (isPaused) {
-                    v.buttonState = 1;
-                } else {
-                    v.buttonState = 0;
-                }
+                // if (isPaused) {
+                //     v.buttonState = 1;
+                // } else {
+                //     v.buttonState = 0;
+                // }
                 requestAnimationFrame(update);
             } else {
                 reset();
@@ -1266,7 +1265,7 @@ export default {
 
         //plots
         function initPlot(){
-            console.log("initPlot called");
+            // console.log("initPlot called");
             Plotly.purge("graph");
             let frames = [],
 
@@ -1282,7 +1281,6 @@ export default {
 
         //load main
         function main() {
-            console.log("main called")
             //slider
             $("input[type=range]").each(function () {
                 $(this).on('input', function(){
@@ -1296,25 +1294,26 @@ export default {
             //     // let idName = $(this).attr("id");
             //     startAnimation();
             // });
-
-
+            if (v.frameNo == -1) {
+                startAnimation();
+            }
+            
             initPlot();
+            // startAnimation();
         }
 
         function redraw() {
             requestAnimationFrame(redraw);
-
-            if (v.buttonState == 1) {
-                startAnimation();
+            
+            if (v.redrawPlot) {
+                historyPlot(v.frameNo);
+                v.redrawPlot = false;
             }
         }
         
-        
         main();
         redraw();
-
     },
-
 }
 </script>
 
