@@ -29,15 +29,15 @@
             </template>
 
             <!-- Graph -->
-            <div class="center" style="padding-top: 50px;">
-                <div id="graph" style="width:450px; height:450px;"></div>
+            <div class="center" id="graph" style="padding-top: 50px;">
+    
             </div>
         </iv-visualisation>
     </div>
 </template>
 <script>
 import vue_config from '../../vue.config.js'
-import p5 from 'p5';
+import P5 from 'p5';
 
 export default {
     name:"curl",
@@ -48,153 +48,151 @@ export default {
         }
     },
     mounted() {
-        let arr1 = [];
-        let arr2 = [];
-        function setup() {
-            let graph1 = p5.createCanvas(400,600);
-            //give graph1 an id
-            graph1.parent("graph")
-            //create a set of arrows pointing to the right
-            for (let i=1; i<10; ++i){
-                for (let j=1; j<20; ++j){
-                    arr1.p5.push(new Arrow(20*i,20*j,j**0.25));
+        const script = p5 => {
+            let arr1 = [];
+            let arr2 = [];
+            p5.setup = () => {
+                let graph1 = p5.createCanvas(400,600);
+                console.log(p5);
+                // graph1.position(10, 10, 'fixed');
+                //give graph1 an id
+                graph1.parent("graph")
+                //create a set of arrows pointing to the right
+                for (let i=1; i<10; ++i){
+                    for (let j=1; j<20; ++j){
+                        arr1.push(new Arrow(20*i,20*j,j**0.25));
 
-            }
-            }
-            //create a set of arrows pointing to the left
-            for (let i=1; i<10; ++i){
-                for (let j=1; j<20; ++j){
-                    arr2.p5.push(new Arrow(20*i+200+0.5*j,20*j,j**0.25));
-
-            }
-            }
-        }
-
-        function draw(){
-            p5.background(255)
-            //draw out all the arrows
-            for (let k=0; k<arr1.length; ++k){
-                arr1[k].update();
-            }
-            for (let k=0; k<arr2.length; ++k){
-                arr2[k].update();
-            }
-            p5.p5.push();
-
-            //draw the paddle wheel, make it update with mouse position
-            if (p5.mouseY < 400.5){
-                p5.translate(p5.mouseX, p5.mouseY);
-                if (p5.mouseX<200.5){
-                    p5.rotate(-p5.frameCount*p5.mouseY / 2000.0);
-                    p5.fill(200,10,255)
-                }else if (p5.mouseX>200.5){
-                    p5.rotate(p5.frameCount*p5.mouseY / 2000.0);
-                    p5.fill(200,255,10)
                 }
-                star(0, 0, 5, 20, 4);
+                }
+                //create a set of arrows pointing to the left
+                for (let i=1; i<10; ++i){
+                    for (let j=1; j<20; ++j){
+                        arr2.push(new Arrow(20*i+200+0.5*j,20*j,j**0.25));
+
+                }
+                }
+            }
+
+            p5.draw = () => {
+                p5.clear();
+                // p5.background(153)
+                //draw out all the arrows
+                for (let k=0; k<arr1.length; ++k){
+                    arr1[k].update();
+                }
+                for (let k=0; k<arr2.length; ++k){
+                    arr2[k].update();
+                }
+                p5.push();
+
+                //draw the paddle wheel, make it update with mouse position
+                if (p5.mouseY < 400.5){
+                    p5.translate(p5.mouseX, p5.mouseY);
+                    if (p5.mouseX<200.5){
+                        p5.rotate(-p5.frameCount*p5.mouseY / 2000.0);
+                        p5.fill(200,10,255)
+                    }else if (p5.mouseX>200.5){
+                        p5.rotate(p5.frameCount*p5.mouseY / 2000.0);
+                        p5.fill(200,255,10)
+                    }
+                    star(0, 0, 5, 20, 4);
+                    p5.pop();
+                }
+
+                //draw the dot and cross that represent the direction of the curl
+                p5.push();
+                p5.fill(255,255,255)
+                p5.arc(100, 500, 40, 40, 0, p5.TWO_PI)
+                p5.push();
+                p5.fill(200,10,255)
+                p5.ellipse(100,500,20,20)
+
+                p5.push();
+                p5.fill(255,255,255)
+                p5.arc(300, 500, 40, 40, 0, p5.TWO_PI)
+
+                p5.push();
+                p5.translate(300,500)
+                p5.fill(200,255,10)
+                p5.rotate(p5.QUARTER_PI);
+                p5.rect(-15,-3,30,5);
                 p5.pop();
+
+                p5.push();
+                p5.translate(300,500)
+                p5.fill(200,255,10)
+                p5.rotate(p5.PI-p5.QUARTER_PI);
+                p5.rect(-15,-3,30,5);
+
             }
 
-            //draw the dot and cross that represent the dip5.rection of the curl
-            p5.push();
-            p5.fill(255,255,255)
-            p5.arc(100, 500, 40, 40, 0, p5.TWO_PI)
-            p5.push();
-            p5.fill(200,10,255)
-            p5.ellipse(100,500,20,20)
-
-            p5.push();
-            p5.fill(255,255,255)
-            p5.arc(300, 500, 40, 40, 0, p5.TWO_PI)
-
-            p5.push();
-            p5.translate(300,500)
-            p5.fill(200,255,10)
-            p5.rotate(p5.QUARTER_PI);
-            p5.rect(-15,-3,30,5);
-            p5.pop();
-
-            p5.push();
-            p5.translate(300,500)
-            p5.fill(200,255,10)
-            p5.rotate(p5.PI-p5.QUARTER_PI);
-            p5.rect(-15,-3,30,5);
-
-        }
-
-        /**
-         * Represents an arrow.
-         * @constructor
-         * @param {float} x - x position of the first point on the arrow.
-         * @param {float} y - y position of the first point on the arrow.
-         * @param {float} length - define the size of the arrow.
-         */
-        function Arrow(x,y,length){
-            this.x = x;
-            this.y = y;
-            this.length = length;
-            this.update = function(){
-            p5.push();
-            p5.translate(this.x,this.y);
-            if (x<200.5){
-                p5.rotate(0)
-                p5.fill(0,100,255)
-            }else if (x>200.5){
-                p5.rotate(p5.PI)
-                p5.fill(255,100,0)
+            /**
+             * Represents an arrow.
+             * @constructor
+             * @param {float} x - x position of the first point on the arrow.
+             * @param {float} y - y position of the first point on the arrow.
+             * @param {float} length - define the size of the arrow.
+             */
+            function Arrow(x,y,length){
+                this.x = x;
+                this.y = y;
+                this.length = length;
+                this.update = function(){
+                p5.push();
+                p5.translate(this.x,this.y);
+                if (x<200.5){
+                    p5.rotate(0)
+                    p5.fill(0,100,255)
+                }else if (x>200.5){
+                    p5.rotate(p5.PI)
+                    p5.fill(255,100,0)
+                }
+                p5.beginShape();
+                p5.vertex(0, -this.length);
+                p5.vertex(5*this.length,-this.length);
+                p5.vertex(5*this.length,-3*this.length);
+                p5.vertex(9*this.length,0);
+                p5.vertex(5*this.length,3*this.length);
+                p5.vertex(5*this.length,this.length);
+                p5.vertex(0,this.length);
+                p5.endShape(p5.CLOSE);
+                p5.pop();
+                }
             }
-            p5.beginShape();
-            p5.vertex(0, -this.length);
-            p5.vertex(5*this.length,-this.length);
-            p5.vertex(5*this.length,-3*this.length);
-            p5.vertex(9*this.length,0);
-            p5.vertex(5*this.length,3*this.length);
-            p5.vertex(5*this.length,this.length);
-            p5.vertex(0,this.length);
-            p5.endShape(p5.CLOSE);
-            p5.pop();
+
+
+            /**
+             * Represents a star.
+             * @constructor
+             * @param {float} x - x position of the center of the star.
+             * @param {float} y - y position of the center of the star.
+             * @param {float} radius1 - length of the centre of the star to the inner p5.vertex.
+             * @param {float} radius2 - length of the centre of the star to the outer p5.vertex.
+             * @param {float} npoints - number of the points of the star.
+             */
+            function star(x,y,radius1, radius2, npoints) {
+                let angle = p5.TWO_PI / npoints;
+                let halfAngle = angle/2.0;
+                p5.beginShape();
+                for (let a = 0; a < p5.TWO_PI; a += angle) {
+                    let sx = x + p5.cos(a) * radius2;
+                    let sy = y + p5.sin(a) * radius2;
+                    p5.vertex(sx, sy);
+                    sx = x + p5.cos(a+halfAngle) * radius1;
+                    sy = y + p5.sin(a+halfAngle) * radius1;
+                    p5.vertex(sx, sy);
+                }
+                p5.endShape(p5.CLOSE);
             }
         }
 
-
-        /**
-         * Represents a star.
-         * @constructor
-         * @param {float} x - x position of the center of the star.
-         * @param {float} y - y position of the center of the star.
-         * @param {float} radius1 - length of the centre of the star to the inner p5.vertex.
-         * @param {float} radius2 - length of the centre of the star to the outer p5.vertex.
-         * @param {float} npoints - number of the points of the star.
-         */
-        function star(x,y,radius1, radius2, npoints) {
-        let angle = p5.TWO_PI / npoints;
-        let halfAngle = angle/2.0;
-        p5.beginShape();
-        for (let a = 0; a < p5.TWO_PI; a += angle) {
-            let sx = x + p5.cos(a) * radius2;
-            let sy = y + p5.sin(a) * radius2;
-            p5.vertex(sx, sy);
-            sx = x + p5.cos(a+halfAngle) * radius1;
-            sy = y + p5.sin(a+halfAngle) * radius1;
-            p5.vertex(sx, sy);
-        }
-        p5.endShape(p5.CLOSE);
-        }
-
-
-        //load main
-        function main() {
-
-            setup();
-            draw();
-        }
-
-        main();
+        const p5graph = new P5(script, 'graph');
+        console.log(p5graph);
     }
 }
 </script>
 <style>
-.center{
+.center {
     display:flex;
     flex-direction: column;
     align-items: center;
