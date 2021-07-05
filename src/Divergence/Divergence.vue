@@ -63,7 +63,6 @@ export default {
     watch: {
         frameNo: function() {
             this.redrawPlot = true;
-
         }
     },
     mounted() {
