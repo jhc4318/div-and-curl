@@ -4,31 +4,36 @@
             <template #hotspots>
                 <iv-pane position="left" format="full">
                     <iv-sidebar-content :showPagination="true">
-                        <iv-sidebar-section title="Circulation">
-                            Consider an arbitrary curve, [C],
+                        <iv-sidebar-section title="Circulation" icon="book-open">
+                            Consider an arbitrary curve, <iv-equation-box class="in-line-eqn" :stylise="false" equation="C" />,
                             <ul>
                                 <li>Simple, piecewise-smooth and Closed,</li>
                                 <li>Positive (Anti-Clockwise) Orientation,</li>
-                                <li>[D] is an area enclosed by the curve, [C].</li>
+                                <li><iv-equation-box class="in-line-eqn" :stylise="false" equation="D" /> is an area enclosed by the curve, <iv-equation-box class="in-line-eqn" :stylise="false" equation="C" />.</li>
                             </ul>
 
-                            Then, for a vector field, [A], the circulation, [Gamma] is defined to be the line integral,
+                            Then, for a vector field, <iv-equation-box class="in-line-eqn" :stylise="false" equation="\mathbf{A}" />, the circulation, <iv-equation-box class="in-line-eqn" :stylise="false" equation="\Gamma" /> is defined to be the line integral, <br><br>
 
                             <div class="center">
                                 <iv-equation-box equation="\Gamma \oint_C \mathbf{A} \cdot \, d\mathbf{r}." />
-                            </div>
+                            </div> <br>
 
-                            Therefore, for [EQUATION], the circulation, [Gamma], is 
+                            Therefore, for <iv-equation-box class="in-line-eqn" :stylise="false" equation="\mathbf{A} = P(x,\,y)\mathbf{\hat{i}} + Q(x,\,y)\mathbf{\hat{j}}" />, the circulation, <iv-equation-box class="in-line-eqn" :stylise="false" equation="\Gamma" />, is <br><br>
 
                             <div class="center">
                                 <iv-equation-box equation="\Gamma = \oint_C P(x,\;y(x))\;dx + Q(x(y),\;y)\;dy," />
-                            </div>
+                            </div><br>
 
-                            Where [EQUATION]. <br>
+                            Where <iv-equation-box class="in-line-eqn" :stylise="false" equation="d\mathbf{r}=dx\mathbf{\hat{i}} + dy\mathbf{\hat{j}}" />. <br>
 
-                            <strong>N.B.</strong> When integrating [P] and [Q], remember to convert [P] as a function of [x] <strong>only</strong> and [Q] as a function of [y] <strong>only</strong>. <br><br>
+                            <strong>N.B.</strong> When integrating <iv-equation-box class="in-line-eqn" :stylise="false" equation="P" /> and <iv-equation-box class="in-line-eqn" :stylise="false" equation="Q" />, remember to convert <iv-equation-box class="in-line-eqn" :stylise="false" equation="P" /> as a function of <iv-equation-box class="in-line-eqn" :stylise="false" equation="x" /> <strong>only</strong> and <iv-equation-box class="in-line-eqn" :stylise="false" equation="Q" /> as a function of <iv-equation-box class="in-line-eqn" :stylise="false" equation="y" /> <strong>only</strong>. <br><br>
 
                             Circulation is a measure of how much the vector field is "spinning" overall, it is called the <strong>macroscopic circulation</strong>.
+                            
+                        </iv-sidebar-section>
+
+                        <iv-sidebar-section title="Instructions" theme="Lime">
+                            The graph for circulation is shown on the right.
                             
                         </iv-sidebar-section>
                     </iv-sidebar-content>
@@ -569,5 +574,9 @@ export default {
     flex-direction: column;
     place-items: center;
     /* padding-top: 100px; */
+}
+.in-line-eqn {
+    margin-top: -25px;
+    margin-bottom: -25px;
 }
 </style>

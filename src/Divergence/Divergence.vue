@@ -4,21 +4,36 @@
             <template #hotspots>
                 <iv-pane position="left" format="full">
                     <iv-sidebar-content :showPagination="true">
-                        <iv-sidebar-section title="Divergence">
-                            The divergence of a vector field <iv-equation-box :stylise="false" equation="\mathbf{A}" /> is: <br>
+                        <iv-sidebar-section title="Divergence" icon="book-open">
+                            The divergence of a vector field <iv-equation-box class="in-line-eqn" :stylise="false" equation="\mathbf{A}" /> is: <br>
                             <div class="center">
-                                <iv-equation-box equation="\text{divergence}  \mathbf{A} = \nabla \cdot \mathbf{A}" />
+                                <iv-equation-box equation="\text{divergence} \mathbf{A} = \nabla \cdot \mathbf{A}" />
                             </div>
 
                             It describes the strength of the source or sink for a given point. <br><br>
 
-                            The Divergence Theorem states that the divergence of a vector field inside a region is equal to the flux of the vector field flowing through the region. Suppose [V] is the volume bounded by region [S]. If [A] is a continuously differentiable vector field defined on a neighborhood of [v], we have: <br>
+                            The Divergence Theorem states that the divergence of a vector field inside a region is equal to the flux of the vector field flowing through the region. Suppose <iv-equation-box class="in-line-eqn" :stylise="false" equation="V" /> is the volume bounded by region <iv-equation-box class="in-line-eqn" :stylise="false" equation="S" />. If <iv-equation-box class="in-line-eqn" :stylise="false" equation="\mathbf{A}" /> is a continuously differentiable vector field defined on a neighborhood of <iv-equation-box class="in-line-eqn" :stylise="false" equation="v" />, we have: <br>
                             <div class="center">
                                 <iv-equation-box equation="\iiint_V (\nabla \cdot \mathbf{A}) \,dV = \oiint_S (\mathbf{A} \cdot \mathbf{\hat{n}}) \,dS" />
                             </div>
-                            Where [n] is the out pointing normal of the surface element [dS]. <br><br>
+                            Where <iv-equation-box :stylise="false" class="in-line-eqn" equation="\mathbf{\hat{n}}" /> is the out pointing normal of the surface element <iv-equation-box :stylise="false" class="in-line-eqn" equation="S" />. <br><br>
 
-                            A simple demonstration is shown in the animation on the right hand side. Each unit volume element [dV] can be considered as a small cube containing a source, with flux coming out on each side of the cube. When placing two neighbouring volume elements together, the flux flowing through the adjacent sides will cancel each other. Hence the overall outcome of piling up all the volume elements will be the flux coming out of the entire surface. Since the volume elements are small enough to be considered as a point source, this total flux is therefore equal to the vector sum of the total strength of each source, which is the total divergence.
+                            A simple demonstration is shown in the animation on the right hand side. Each unit volume element <iv-equation-box class="in-line-eqn" :stylise="false" equation="dV" /> can be considered as a small cube containing a source, with flux coming out on each side of the cube. When placing two neighbouring volume elements together, the flux flowing through the adjacent sides will cancel each other. Hence the overall outcome of piling up all the volume elements will be the flux coming out of the entire surface. Since the volume elements are small enough to be considered as a point source, this total flux is therefore equal to the vector sum of the total strength of each source, which is the total divergence.
+                            
+                        </iv-sidebar-section>
+
+                        <iv-sidebar-section title="Instructions" theme="Lime">
+                            The initial graph shows an object sitting in a vector field with flux coming out from each side. <br><br>
+
+                            Click on the "Play" button to start the animation. <br><br>
+
+                            Pause the animation at Frame 20; the initial object has been sliced into small volume elements, with each of them having flux coming out from each side. <br><br>
+
+                            Continue playing. The process will be reversed. By adding a small volume element that contains a source each time, the flux flowing through the adjacent sides of two neighbour elements will cancel each other. Keep playing you will see the overall outcome of piling up all the volume elements will be the flux coming out of the entire surface. <br><br>
+
+                            The slider controls the frames of the animation, you can play with it to see each frame. <br><br>
+
+                            You can zoom in the graph by turning your mouse wheel, and you can also view the graph from different viewpoints by click on the graph and rotate it with your mouse.
                             
                         </iv-sidebar-section>
                     </iv-sidebar-content>
@@ -1322,5 +1337,9 @@ export default {
     flex-direction: column;
     align-items: center;
 
+}
+.in-line-eqn {
+    margin-top: -25px;
+    margin-bottom: -25px;
 }
 </style>

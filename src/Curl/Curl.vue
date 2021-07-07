@@ -4,24 +4,34 @@
             <template #hotspots>
                 <iv-pane position="left" format="full">
                     <iv-sidebar-content :showPagination="true">
-                        <iv-sidebar-section title="Curl">
-                            The curl of a vector field [A] is: <br>
+                        <iv-sidebar-section title="Curl" icon="book-open">
+                            The curl of a vector field <iv-equation-box class="in-line-eqn" :stylise="false" equation="\mathbf{A}" /> is: <br>
                             <div class="center">
                                 <iv-equation-box equation="\text{curl} \, \mathbf{A} = \nabla \times \mathbf{A}" />
                             </div>
 
                             <strong>N.B.</strong> The curl can be thought of as a measure of "spinning per unit area". <br><br>
 
-                            Consider a 2D field A=(P,Q,0), we have the following definition: <br>
+                            Consider a 2D field <iv-equation-box class="in-line-eqn" :stylise="false" equation="\mathbf{A} = (P,Q,0)" />, we have the following definition: <br>
                             <div class="center">
-                                <iv-equation-box equation="\iint_D (\nabla \times \mathbf{A}) \cdot \mathbf{\hat{k}} \,dS = \iint_D (\frac{\partial Q}{\partial x}(x, y) - \frac{\partial P}{\partial y}(x, y)) \,dx\,dy" />
+                                <iv-equation-box equation="\iint_D (\nabla \times \mathbf{A}) \cdot \mathbf{\hat{k}} \,dS 
+                                \\ = \\
+                                \iint_D (\frac{\partial Q}{\partial x}(x, y) - \frac{\partial P}{\partial y}(x, y)) \,dx\,dy" />
                             </div>
 
                             This is known as <strong>microscopic circulation</strong>. <br><br>
 
-                            The graph on the left hand side shows the spin of a small paddle wheel in two vector fields pointing in opposite dip5.rections. The speed and the dip5.rection of its spin depends on the strength and dip5.rection of the field where it is placed. <br><br>
+                            The graph on the left hand side shows the spin of a small paddle wheel in two vector fields pointing in opposite directions. The speed and the direction of its spin depends on the strength and direction of the field where it is placed. <br><br>
 
-                            <strong>N.B.</strong> Within the integrand, k is the normal vector for the vector field and its dip5.rection is determined by the orientation of the closed curve, C. Commonly known as the <strong>right hand rule</strong>. A pictoral representation is shown below:
+                            <strong>N.B.</strong> Within the integrand, <iv-equation-box class="in-line-eqn" :stylise="false" equation="k" /> is the normal vector for the vector field and its direction is determined by the orientation of the closed curve, <iv-equation-box class="in-line-eqn" :stylise="false" equation="C" />. Commonly known as the <strong>right hand rule</strong>. A pictoral representation is shown below:
+                            
+                            <img src="../assets/rhr_thumb.png"
+                            alt="Right hand rule"
+                            style="display: flex; width: 100%;">
+                        </iv-sidebar-section>
+
+                        <iv-sidebar-section title="Instructions" theme="Lime">
+                            The graph shows two vector fields pointing to the opposite direction. By putting your mouse anywhere on the graph, you can see the rotation of the paddle wheel under the effect of the vector field.
                             
                         </iv-sidebar-section>
                     </iv-sidebar-content>
@@ -196,6 +206,9 @@ export default {
     display:flex;
     flex-direction: column;
     align-items: center;
-
+}
+.in-line-eqn {
+    margin-top: -25px;
+    margin-bottom: -25px;
 }
 </style>
