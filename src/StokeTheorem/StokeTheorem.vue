@@ -20,11 +20,13 @@
                         </iv-sidebar-section>
                     </iv-sidebar-content>
                 </iv-pane>
-
-                <iv-fixed-hotspot position="bottom" transparent>
-                    <iv-slider id="sizeSlider" name="Size of surface" :min="0" :max="2" :step="0.1" :tick_step="0.2" :init_val="0" @sliderChangedbyClick="changeSize" @sliderChangedbyDragging="changeSize" />
-                    <iv-slider id="shapeSlider" name="Shape of the loop" :min="0" :max="8" :step="1" :tick_step="1" :init_val="0" @sliderChangedbyClick="changeShape" @sliderChangedbyDragging="changeShape" />
+                
+                <iv-fixed-hotspot position="bottom" transparent class="center">
+                    <iv-slider id="sizeSlider" name="Size of surface" :min="0" :max="2" :step="0.1" :tick_step="0.2" :init_val="2" @sliderChangedbyClick="changeSize" @sliderChangedbyDragging="changeSize" />
+                    <iv-slider id="shapeSlider" name="Shape of the loop" :min="2" :max="8" :step="1" :tick_step="1" :init_val="2" @sliderChangedbyClick="changeShape" @sliderChangedbyDragging="changeShape" />
+                    <iv-slider id="frameSlider" name="Frame #" :min="0" :max="19" :step="1" :tick_step="2" :init_val="0" :playButton="true" @sliderChangedbyPlay="changeSlider" @sliderChangedbyClick="changeSlider" @sliderChangedbyDragging="changeSlider" />
                 </iv-fixed-hotspot>
+
             </template>
 
             <!-- Graph -->
@@ -62,6 +64,23 @@ export default {
         changeShape(e) {
             this.shape = e;
             this.redrawPlot = true;
+        },
+        changeSlider(e) {
+            this.frameNo = e;
+            this.redrawPlot = true;
+        }
+    },
+    computed: {
+        buttonState() {
+            if (this.isPaused) {
+                if (this.frameNo < 20 ) {
+                    return "Play"
+                } else {
+                    return "Reset"
+                }
+            } else {
+                return "Pause";
+            }
         }
     },
     mounted() {
@@ -181,7 +200,7 @@ export default {
 
 
             this.gObject = function(color=black, width=7, dash="solid", height=1, wave=4,opacity=0.5) {
-                let meshSize = 40; //multiple of 4!
+                let meshSize = 40; //multiple of 4! 40
                 let phi = numeric.linspace(0, 2*Math.PI, meshSize);
                 let theta = numeric.linspace(0,wave*Math.PI, meshSize);
                 let x = [], y = [], z = [];
@@ -191,6 +210,7 @@ export default {
                     y.push(this.radius*Math.sin(phi[i]) + this.center[1]);
                     z.push(height*(height*Math.sin(theta[i]) + this.center[2])+height);
                 }
+                
                 let line2 = new Line([[x[0],y[0],z[0]],[x[7],y[7],z[7]]])
                 let lineObject = [{
                     type: "scatter3d",
@@ -206,7 +226,6 @@ export default {
                     line2.arrowHead(magenta,5)
                 ]
 
-
                 return lineObject;
             }
 
@@ -219,7 +238,7 @@ export default {
 
         function Sphere(radius) {
             this.radius = radius;
-            this.gObject = function(color1,color2, size, height=1, wave=4) {
+            this.gObject = function(color1,color2, width=7, dash="solid", size, height=1, wave=4) { // eslint-disable-line no-unused-vars
                 let meshSize = 40;
                 let phi = numeric.linspace(0, 2*Math.PI, meshSize);
                 let theta= numeric.linspace(0, 0.5*Math.PI, meshSize);
@@ -234,6 +253,7 @@ export default {
                         this.z[i].push((size* this.radius*Math.cos(theta[j])+height*(Math.sin(theta[j])*Math.sin(theta[j])*Math.sin(theta[j]))*(height*Math.sin(beta[i]) + 1)*(Math.sin(theta[j]))+height));
                     }
                 }
+
                 let x1 = 1;
                 let y1 = 1;
                 let z1 = height*(Math.sin(0.5*Math.PI)*Math.sin(0.5*Math.PI)*Math.sin(0.5*Math.PI))*(height*Math.sin(beta[0]) + 1)*(Math.sin(0.5*Math.PI));
@@ -449,7 +469,7 @@ export default {
             let pringles = new Pringles(4, [1,1,1]);
             let cirface = new Sphere(4)
 
-            data = data.concat(cirface.gObject(blue, white, 7,"solid", x,1,y))
+            data = data.concat(cirface.gObject(blue, white, 7, "solid", x,1,y))
             data = data.concat(pringles.gObject(black, 7, "solid",1,y));
 
 
@@ -482,7 +502,7 @@ export default {
                 if (i<19){
                     data = [];
                     let cirface = new Sphere(4)
-                    data = data.concat(cirface.gObject(blue, blue, 7,"solid", H[i],1,y))
+                    data = data.concat(cirface.gObject(blue, blue, 7,"solid", H[i],1,y)) 
                     let pringles = new Pringles(4, [1,1,1]);
                     data = data.concat(pringles.gObject(black, 7, "solid", 1,y))
 
@@ -534,6 +554,7 @@ export default {
             );
             //load animation
             initAnimation("animate", frames, [], layout, 10, [0,20], true)
+            console.log(frames);
         }
 
         //load main

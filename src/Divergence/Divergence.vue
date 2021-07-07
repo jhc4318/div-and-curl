@@ -5,9 +5,9 @@
                 <iv-pane position="left" format="full">
                     <iv-sidebar-content :showPagination="true">
                         <iv-sidebar-section title="Divergence">
-                            The divergence of a vector field [A] is: <br>
+                            The divergence of a vector field <iv-equation-box :stylise="false" equation="\mathbf{A}" /> is: <br>
                             <div class="center">
-                                <iv-equation-box equation="\text{divergence} \, \mathbf{A} = \nabla \cdot \mathbf{A}" />
+                                <iv-equation-box equation="\text{divergence}  \mathbf{A} = \nabla \cdot \mathbf{A}" />
                             </div>
 
                             It describes the strength of the source or sink for a given point. <br><br>

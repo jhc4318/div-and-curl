@@ -14,7 +14,7 @@
   "author": "Robert King",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "@impvis/components": "^1.2.5",
+    "@impvis/components": "^1.2.9",
     "@impvis/components-katex": "^1.0.0",
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
@@ -34,7 +34,7 @@
     "babel": "^6.23.0",
     "babel-eslint": "^10.1.0",
     "chalk": "^4.1.0",
-    "eslint": "^7.29.0",
+    "eslint": "^7.30.0",
     "eslint-plugin-vue": "^7.12.1",
     "vue-template-compiler": "^2.6.11"
   },
