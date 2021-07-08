@@ -4,10 +4,10 @@
             <template #hotspots>
                 <iv-pane position="left" format="full">
                     <iv-sidebar-content :showPagination="true">
-                        <iv-sidebar-section title="Green's Theorem">
+                        <iv-sidebar-section title="Green's Theorem" icon="book-open">
                             The arrows for microscopic circulation are colour-coded. <br><br>
 
-                            From the diagram, we can see that every arrows inside the grid is paired with an arrow with opposite
+                            From the diagram, we can see that every arrow inside the grid is paired with an arrow with opposite
                             direction. In other words, all the <span style="color:#FF00FF"><b>magenta</b></span> arrows will
                             cancel each other and we are left with <span style="color:#008000"><b>green</b></span> arrows. <br><br>
 
@@ -18,20 +18,28 @@
                                 <iv-equation-box equation="\oint_C \mathbf{A} \cdot \, d\mathbf{r} = \iint_D (\nabla \times \mathbf{A}) \cdot \mathbf{\hat{k}} \, dS." />
                             </div>
 
-                            Where [A] is the vector field defined for the area inside the closed curve, [D]. <br><br>
+                            Where <iv-equation-box class="in-line-eqn" :stylise="false" equation="\mathbf{A}" /> is the vector field defined for the area inside the closed curve, <iv-equation-box class="in-line-eqn" :stylise="false" equation="D" />. <br><br>
 
-                            For [Equation], Green's Theorem is reduced to, 
+                            For <iv-equation-box class="in-line-eqn" :stylise="false" equation="\mathbf{A} = (P,Q,R)" />, Green's Theorem is reduced to, 
 
                             <div class="center">
-                                <iv-equation-box equation="\oint_C \,P(x,y(x))\,dx + Q(x,x(y))\,dy = \iint_D \left[ \frac{\partial Q}{\partial x}(x,\,y) - \frac{\partial P}{\partial y}(x,\,y) \right] \,dx\,dy" />
+                                <iv-equation-box equation="\oint_C \,P(x,y(x))\,dx + Q(x,x(y))\,dy 
+                                \\ = \\
+                                \iint_D \left[ \frac{\partial Q}{\partial x}(x,\,y) - \frac{\partial P}{\partial y}(x,\,y) \right] \,dx\,dy" />
                             </div>
+                        </iv-sidebar-section>
+
+                        <iv-sidebar-section title="Instructions" theme="Lime">
+                            The graph shows the relationship between microscopic circulation and macroscopic circulation. From the graph you can see by adding up the microscopic circulations, the inner arrows will cancel with each other. Hence the sole effect of piling up the microscopic circulations will be the macroscopic circulation. <br><br>
+                            
+                            By changing the slider, more microscopic circulations will be added in the graph.
                         </iv-sidebar-section>
                     </iv-sidebar-content>
                 </iv-pane>
 
                 <!-- Slider -->
                 <iv-fixed-hotspot position="bottom" transparent>
-                    <iv-slider id="circSlider" name="Number of micro circulations" :min="2" :max="7" :step="1" :tick_step="1" :init_val="2" @sliderChangedbyClick="changeSlider" @sliderChangedbyDragging="changeSlider" />
+                    <iv-slider id="circSlider" name="Number of micro circulations" :min="2" :max="7" :step="1" :tick_step="1" :init_val="2" @sliderChanged="changeSlider" />
                 </iv-fixed-hotspot>
             </template>
 
@@ -654,5 +662,9 @@ export default {
     flex-direction: column;
     align-items: center;
     /* margin-top: 50px; */
+}
+.in-line-eqn {
+    margin-top: -25px;
+    margin-bottom: -25px;
 }
 </style>

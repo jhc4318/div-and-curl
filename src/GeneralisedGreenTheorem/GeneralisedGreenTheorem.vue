@@ -4,7 +4,7 @@
             <template #hotspots>
                 <iv-pane position="left" format="full">
                     <iv-sidebar-content :showPagination="true">
-                        <iv-sidebar-section title="Green's Theorem">
+                        <iv-sidebar-section title="Generalised Green's Theorem" icon="book-open">
                             Similarly, any arbitrary shape can be cut in to small pieces, with microscopic circulation existing on each of them. <br><br>
 
                             From the animation on the right hand side, every arrows inside the grid will cancel with an arrow with opposite
@@ -14,11 +14,17 @@
                             This again demonstrates the relationship between the microscopic circulation and the macroscopic circulation. Therefore Green's theorem can
                             be apply on any positively oriented, piecewise smooth, simple closed arbitrary curves.              
                         </iv-sidebar-section>
+
+                        <iv-sidebar-section title="Instructions" theme="Lime">
+                            The graph shows a 2D arbitrary surface bounded by an anticlockwise oriented loop. <br><br>
+
+                            By clicking on the "Play" button, the surface will be sliced into several smaller pieces, each bounded by an anticlockwise oriented loop. The inner arrows will cancel with each other. And hence the sole effect of piling up the microscopic circulations will be the macroscopic circulation.
+                        </iv-sidebar-section>
                     </iv-sidebar-content>
                 </iv-pane>
 
                 <iv-fixed-hotspot position="bottom" transparent>
-                    <iv-slider id="frameSlider" name="Frame #" :min="0" :max="9" :step="1" :tick_step="1" :init_val="0" :playButton="true" @sliderChangedbyPlay="changeSlider" @sliderChangedbyDragging="changeSlider" @sliderChangedbyClick="changeSlider" />
+                    <iv-slider id="frameSlider" name="Frame #" :min="0" :max="9" :step="1" :tick_step="1" :init_val="0" :playButton="true" @sliderChanged="changeSlider" />
                 </iv-fixed-hotspot>
             </template>
 

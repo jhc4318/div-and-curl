@@ -1,17 +1,17 @@
 <template>
-    <div>
+    <div style="overflow: hidden;">
         <iv-visualisation :title="pageName" :vue_config="vue_config" :page_number="7">
             <template #hotspots>
                 <iv-pane position="left" format="full">
                     <iv-sidebar-content :showPagination="true">
-                        <iv-sidebar-section title="Stoke's Theorem">
-                            Stoke's theorem relates the integral of the curl of a vector field, <strong>V</strong>, over an open surface <strong>S</strong> to the path integral of the vector field around a loop <strong>C</strong> defining the surface boundary. <br><br>
+                        <iv-sidebar-section title="Stoke's Theorem" icon="book-open">
+                            Stoke's theorem relates the integral of the curl of a vector field, <iv-equation-box class="in-line-eqn" :stylise="false" equation="\mathbf{V}" />, over an open surface <iv-equation-box class="in-line-eqn" :stylise="false" equation="S" /> to the path integral of the vector field around a loop <iv-equation-box class="in-line-eqn" :stylise="false" equation="C" /> defining the surface boundary. <br><br>
 
                             Mathematically, this can be written as 
                             <div class="center">
                                 <iv-equation-box equation="\iint_{S} \nabla \times \vec{V} \cdot \vec{dS} = \oint_C \vec{V} \cdot \vec{dr}" />
                             </div>
-                            Where dS is the surface normal vector and dr is the path tangent vector. <br><br>
+                            Where <iv-equation-box class="in-line-eqn" :stylise="false" equation="dS" /> is the surface normal vector and <iv-equation-box class="in-line-eqn" :stylise="false" equation="dr" /> is the path tangent vector. <br><br>
 
                             As the right hand side of the equation is independent of the surface, the integral of the curl of a vector field over a surface is independent of the surface itself, but is only determined by the curve bounding it. <br><br>
 
@@ -21,16 +21,23 @@
                     </iv-sidebar-content>
                 </iv-pane>
                 
-                <iv-fixed-hotspot position="bottom" transparent class="center">
-                    <iv-slider id="sizeSlider" name="Size of surface" :min="0" :max="2" :step="0.1" :tick_step="0.2" :init_val="2" @sliderChangedbyClick="changeSize" @sliderChangedbyDragging="changeSize" />
-                    <iv-slider id="shapeSlider" name="Shape of the loop" :min="2" :max="8" :step="1" :tick_step="1" :init_val="2" @sliderChangedbyClick="changeShape" @sliderChangedbyDragging="changeShape" />
-                    <iv-slider id="frameSlider" name="Frame #" :min="0" :max="19" :step="1" :tick_step="2" :init_val="0" :playButton="true" @sliderChangedbyPlay="changeSlider" @sliderChangedbyClick="changeSlider" @sliderChangedbyDragging="changeSlider" />
+                <iv-toggle-hotspot position="bottom" title="Properties">
+                    <div style="width: 100%;">
+                        <iv-slider id="sizeSlider" name="Size of surface" :min="0" :max="2" :step="0.1" :tick_step="0.2" :init_val="2" @sliderChanged="changeSize" />
+                        <iv-slider id="shapeSlider" name="Shape of the loop" :min="2" :max="8" :step="1" :tick_step="2" :init_val="2" @sliderChanged="changeShape" />
+                    </div>
+                </iv-toggle-hotspot>
+
+                <iv-fixed-hotspot position="right" transparent class="center">
+                    <div>
+                        <iv-button id="playButton" @click="togglePause">{{ buttonMessage }}</iv-button>
+                    </div>
                 </iv-fixed-hotspot>
 
             </template>
 
             <!-- Graph -->
-            <div class="center" style="padding-top: 50px;">
+            <div class="center" style="">
                 <div id="graph" style="width:450px; height:450px;"></div>
             </div>
         </iv-visualisation>
@@ -65,22 +72,48 @@ export default {
             this.shape = e;
             this.redrawPlot = true;
         },
-        changeSlider(e) {
-            this.frameNo = e;
-            this.redrawPlot = true;
-        }
+        togglePause() {
+            if (this.frameNo != 19) {
+                this.isPaused = !this.isPaused;
+            }
+            
+            
+            if (!this.isPaused) {
+                this.timer = setInterval(() => {
+                    if (this.frameNo < 19) {
+                        this.frameNo += 1;
+                    } else {
+                        clearInterval(this.timer);
+                        this.isPaused = true;
+                    }
+                }, 100)
+            } else {
+                clearInterval(this.timer);
+                if (this.frameNo == 19) {
+                    this.frameNo = 0;
+                    this.redrawPlot = true;
+                    console.log("reset")
+                }
+            }
+        },
     },
     computed: {
-        buttonState() {
+        buttonMessage() {
+            console.log(this.frameNo);
             if (this.isPaused) {
-                if (this.frameNo < 20 ) {
-                    return "Play"
+                if (this.frameNo < 19) {
+                    return "Play";
                 } else {
-                    return "Reset"
+                    return "Reset";
                 }
-            } else {
-                return "Pause";
-            }
+            } 
+
+            return "Pause";
+        }
+    },
+    watch: {
+        frameNo() {
+            this.redrawPlot = true;
         }
     },
     mounted() {
@@ -596,5 +629,9 @@ export default {
     flex-direction: column;
     align-items: center;
     /* margin-top: 50px; */
+}
+.in-line-eqn {
+    margin-top: -25px;
+    margin-bottom: -25px;
 }
 </style>
