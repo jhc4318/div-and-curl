@@ -12,19 +12,19 @@
                                 <li><iv-equation-box class="in-line-eqn" :stylise="false" equation="D" /> is an area enclosed by the curve, <iv-equation-box class="in-line-eqn" :stylise="false" equation="C" />.</li>
                             </ul>
 
-                            Then, for a vector field, <iv-equation-box class="in-line-eqn" :stylise="false" equation="\mathbf{A}" />, the circulation, <iv-equation-box class="in-line-eqn" :stylise="false" equation="\Gamma" /> is defined to be the line integral, <br><br>
+                            Then, for a vector field, <iv-equation-box class="in-line-eqn" :stylise="false" equation="\mathbf{A}" />, the circulation, <iv-equation-box class="in-line-eqn" :stylise="false" equation="\Gamma" /> is defined to be the line integral,
 
-                            <div class="center">
-                                <iv-equation-box equation="\Gamma \oint_C \mathbf{A} \cdot \, d\mathbf{r}." />
-                            </div> <br>
+                            <div class="center" style="padding-bottom: 10px;">
+                                <iv-equation-box equation="\Gamma = \oint_C \mathbf{A} \cdot \, d\mathbf{r}." />
+                            </div> 
 
-                            Therefore, for <iv-equation-box class="in-line-eqn" :stylise="false" equation="\mathbf{A} = P(x,\,y)\mathbf{\hat{i}} + Q(x,\,y)\mathbf{\hat{j}}" />, the circulation, <iv-equation-box class="in-line-eqn" :stylise="false" equation="\Gamma" />, is <br><br>
+                            Therefore, for <iv-equation-box class="in-line-eqn" :stylise="false" equation="\mathbf{A} = P(x,\,y)\mathbf{\hat{i}} + Q(x,\,y)\mathbf{\hat{j}}" />, the circulation, <iv-equation-box class="in-line-eqn" :stylise="false" equation="\Gamma" />, is 
 
-                            <div class="center">
+                            <div class="center" style="padding-bottom: 10px;">
                                 <iv-equation-box equation="\Gamma = \oint_C P(x,\;y(x))\;dx + Q(x(y),\;y)\;dy," />
-                            </div><br>
+                            </div>
 
-                            Where <iv-equation-box class="in-line-eqn" :stylise="false" equation="d\mathbf{r}=dx\mathbf{\hat{i}} + dy\mathbf{\hat{j}}" />. <br>
+                            Where <iv-equation-box class="in-line-eqn" :stylise="false" equation="d\mathbf{r}=dx\mathbf{\hat{i}} + dy\mathbf{\hat{j}}" />. <br><br>
 
                             <strong>N.B.</strong> When integrating <iv-equation-box class="in-line-eqn" :stylise="false" equation="P" /> and <iv-equation-box class="in-line-eqn" :stylise="false" equation="Q" />, remember to convert <iv-equation-box class="in-line-eqn" :stylise="false" equation="P" /> as a function of <iv-equation-box class="in-line-eqn" :stylise="false" equation="x" /> <strong>only</strong> and <iv-equation-box class="in-line-eqn" :stylise="false" equation="Q" /> as a function of <iv-equation-box class="in-line-eqn" :stylise="false" equation="y" /> <strong>only</strong>. <br><br>
 

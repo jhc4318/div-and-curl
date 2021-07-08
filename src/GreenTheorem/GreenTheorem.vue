@@ -61,7 +61,7 @@ export default {
     name:"greentheorem",
     data() {
         return {
-            pageName:"GreenTheorem",
+            pageName:"Green's Theorem",
             vue_config,
             numOfArrows: 2,
             redrawPlot: false,

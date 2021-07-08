@@ -18,22 +18,34 @@
                             Therefore, changing the surface by moving the first slider doesn't change the value of the integral, however, modifying the loop by moving the second slider does. <br><br>
                             
                         </iv-sidebar-section>
+
+                        <iv-sidebar-section title="Instructions" theme="Lime">
+                            The graph shows an open surface bounded by a loop. <br><br>
+
+                            Click on the "Play" button to start the animation. The open surface then can be squashed down to the area bounded by the loop. <br><br>
+
+                            Open the "Properties" tab. <br><br>
+
+                            Try changing the size of the surface. After changing the slider, play the animation again to see the value of the integral will NOT be affected by the shape of the open surface. <br><br>
+
+                            Try changing the shape of the loop. After changing the slider, play the animation again to see the value of the integral will be affected by the shape of the loop. <br><br>
+                        </iv-sidebar-section>
                     </iv-sidebar-content>
                 </iv-pane>
                 
-                <iv-toggle-hotspot position="bottom" title="Properties">
+                <iv-toggle-hotspot position="bottom" title="Properties" style="z-index: 100;">
                     <div style="width: 100%;">
                         <iv-slider id="sizeSlider" name="Size of surface" :min="0" :max="2" :step="0.1" :tick_step="0.2" :init_val="2" @sliderChanged="changeSize" />
-                        <iv-slider id="shapeSlider" name="Shape of the loop" :min="2" :max="8" :step="1" :tick_step="2" :init_val="2" @sliderChanged="changeShape" />
+                        <iv-slider id="shapeSlider" name="Shape of the loop" :min="2" :max="8" :step="2" :tick_step="2" :init_val="2" @sliderChanged="changeShape" />
+                        
                     </div>
                 </iv-toggle-hotspot>
 
-                <iv-fixed-hotspot position="right" transparent class="center">
-                    <div>
+                <iv-fixed-hotspot position="bottomright" transparent>
+                    <div style="margin: auto;">
                         <iv-button id="playButton" @click="togglePause">{{ buttonMessage }}</iv-button>
                     </div>
                 </iv-fixed-hotspot>
-
             </template>
 
             <!-- Graph -->
@@ -54,22 +66,25 @@ export default {
     name:"stoketheorem",
     data(){
         return {
-            pageName:"StokeTheorem",
+            pageName:"Stoke's Theorem",
             vue_config,
             size: 2,
             shape: 2,
             frameNo: 0,
             redrawPlot: false,
             isPaused: true,
+            updateProperties: false,
         };
     },
     methods: {
         changeSize(e) {
             this.size = e;
+            this.frameNo = 0;
             this.redrawPlot = true;
         },
         changeShape(e) {
             this.shape = e;
+            this.frameNo = 0;
             this.redrawPlot = true;
         },
         togglePause() {
@@ -91,7 +106,6 @@ export default {
                 clearInterval(this.timer);
                 if (this.frameNo == 19) {
                     this.frameNo = 0;
-                    this.redrawPlot = true;
                     console.log("reset")
                 }
             }
@@ -515,7 +529,7 @@ export default {
             let data1 = [];
             let x = v.size;
             let y = v.shape;
-            console.log(`x: ${v.size}, y: ${v.shape}`)
+            // console.log(`x: ${v.size}, y: ${v.shape}`)
             let cirface = new Sphere(4)
             data1 = data1.concat(cirface.gObject(blue, blue, 7,"solid", x,1,y))
             let pringles = new Pringles(4, [1,1,1]);
@@ -588,6 +602,8 @@ export default {
             //load animation
             initAnimation("animate", frames, [], layout, 10, [0,20], true)
             console.log(frames);
+
+            v.updateProperties = true;
         }
 
         //load main
@@ -611,8 +627,16 @@ export default {
         
         function redraw() {
             requestAnimationFrame(redraw);
+
+            if (v.updateProperties) {
+                updatePlot();
+                v.frameNo = 0;
+                v.redrawPlot = true;
+                v.updateProperties = false;
+            }
             
             if (v.redrawPlot) {
+                console.log(`Plot redrawn - frameNo: ${v.frameNo}`)
                 historyPlot(v.frameNo);
                 v.redrawPlot = false;
             }

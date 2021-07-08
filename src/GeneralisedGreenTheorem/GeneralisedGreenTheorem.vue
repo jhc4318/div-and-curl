@@ -7,7 +7,7 @@
                         <iv-sidebar-section title="Generalised Green's Theorem" icon="book-open">
                             Similarly, any arbitrary shape can be cut in to small pieces, with microscopic circulation existing on each of them. <br><br>
 
-                            From the animation on the right hand side, every arrows inside the grid will cancel with an arrow with opposite
+                            From the animation on the right hand side, every arrow inside the grid will cancel with an arrow with opposite
                             direction. In other words, all the <span style="color:#FF00FF"><b>magenta</b></span> arrows will
                             cancel each other and we are left with <span style="color:#000000"><b>black</b></span> arrows.<br><br>
 
@@ -24,7 +24,9 @@
                 </iv-pane>
 
                 <iv-fixed-hotspot position="bottom" transparent>
-                    <iv-slider id="frameSlider" name="Frame #" :min="0" :max="9" :step="1" :tick_step="1" :init_val="0" :playButton="true" @sliderChanged="changeSlider" />
+                    <div class="center" style="padding-bottom: 50px;">
+                        <iv-button id="playButton" @click="togglePause">{{ buttonMessage }}</iv-button>
+                    </div>
                 </iv-fixed-hotspot>
             </template>
 
@@ -45,7 +47,7 @@ export default {
     name:"generalisedgreentheorem",
     data(){
         return {
-            pageName:"GeneralisedGreenTheorem",
+            pageName:"Generalised Green's Theorem",
             vue_config,
             isPaused: true,
             redrawPlot: false,
@@ -53,9 +55,44 @@ export default {
         };
     },
     methods: {
-        changeSlider(e) {
-            this.frameNo = e;
-        }
+        togglePause() {
+            if (this.frameNo != 9) {
+                this.isPaused = !this.isPaused;
+            }
+            
+            
+            if (!this.isPaused) {
+                this.timer = setInterval(() => {
+                    if (this.frameNo < 9) {
+                        this.frameNo += 1;
+                    } else {
+                        clearInterval(this.timer);
+                        this.isPaused = true;
+                    }
+                }, 100)
+            } else {
+                clearInterval(this.timer);
+                if (this.frameNo == 9) {
+                    this.frameNo = 0;
+                    this.redrawPlot = true;
+                    console.log("reset")
+                }
+            }
+        },
+    },
+    computed: {
+        buttonMessage() {
+            console.log(this.frameNo);
+            if (this.isPaused) {
+                if (this.frameNo < 9) {
+                    return "Play";
+                } else {
+                    return "Reset";
+                }
+            } 
+
+            return "Pause";
+        },
     },
     watch: {
         frameNo: function() {

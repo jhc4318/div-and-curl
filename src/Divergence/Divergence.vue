@@ -18,7 +18,11 @@
                             </div>
                             Where <iv-equation-box :stylise="false" class="in-line-eqn" equation="\mathbf{\hat{n}}" /> is the out pointing normal of the surface element <iv-equation-box :stylise="false" class="in-line-eqn" equation="S" />. <br><br>
 
-                            A simple demonstration is shown in the animation on the right hand side. Each unit volume element <iv-equation-box class="in-line-eqn" :stylise="false" equation="dV" /> can be considered as a small cube containing a source, with flux coming out on each side of the cube. When placing two neighbouring volume elements together, the flux flowing through the adjacent sides will cancel each other. Hence the overall outcome of piling up all the volume elements will be the flux coming out of the entire surface. Since the volume elements are small enough to be considered as a point source, this total flux is therefore equal to the vector sum of the total strength of each source, which is the total divergence.
+                            A simple demonstration is shown in the animation on the right hand side. <br><br>
+                            
+                            Each unit volume element <iv-equation-box class="in-line-eqn" :stylise="false" equation="dV" /> can be considered as a small cube containing a source, with flux coming out on each side of the cube. When placing two neighbouring volume elements together, the flux flowing through the adjacent sides will cancel each other. Hence the overall outcome of piling up all the volume elements will be the flux coming out of the entire surface. <br><br>
+                            
+                            Since the volume elements are small enough to be considered as a point source, this total flux is therefore equal to the vector sum of the total strength of each source, which is the total divergence.
                             
                         </iv-sidebar-section>
 
