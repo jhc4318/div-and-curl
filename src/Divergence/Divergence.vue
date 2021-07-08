@@ -44,7 +44,7 @@
                 </iv-pane>
 
                 <iv-fixed-hotspot position="bottom" transparent>
-                    <iv-slider id="frameSlider" name="Frame #" :min="0" :max="176" :step="1" :tick_step="20" :init_val="0" :playButton="true" @sliderChanged="changeSlider" />
+                    <iv-slider id="frameSlider" name="Frame #" :min="0" :max="176" :step="1" :tick_step="20" :init_val="0" :playButton="true" :time_step="10" @sliderChanged="changeSlider" />
                 </iv-fixed-hotspot>
             </template>
 
